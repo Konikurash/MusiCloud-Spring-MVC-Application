@@ -7,7 +7,7 @@
 <div class="col-md-1">
 </div>
 <div class="col-md-5 login-module">
-<h1>Login</h1>
+<h1 id="module-head">Login</h1>
 <div id="login-form">
 <form:form method="POST" modelAttribute="user" action="loginUser">
   <div class="form-group">
