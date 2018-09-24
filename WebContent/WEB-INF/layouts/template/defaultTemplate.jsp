@@ -1,5 +1,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<!-- 
+  --	Default template to be used throughout the application
+  --	uses bootstrap css, JQuery, custom css stylesheets, and railway font
+  --
+  --	Created by William Bierer & Brendan Brooks.
+  -- 
+  -->
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>MusiCloud</title>

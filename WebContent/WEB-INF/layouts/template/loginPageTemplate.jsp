@@ -1,5 +1,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<!-- 
+  --	Template used for login/registration views
+  --	uses bootstrap css, JQuery, custom css stylesheets, and railway font
+  --
+  --	Created by William Bierer & Brendan Brooks.
+  -- 
+  -->
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>MusiCloud | Login & Register</title>
@@ -19,6 +28,7 @@
 	 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
 </head>
  
+ <!-- Get custom background image -->
 <spring:url value="/assets/images/blurred-audience.png" var="backgroundImage" />
 <body style="background: url(${backgroundImage}) no-repeat fixed center !important; background-size: cover !important;">
 	<!-- Header -->
