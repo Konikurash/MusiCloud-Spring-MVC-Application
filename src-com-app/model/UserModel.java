@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  */
 
 
-public class User {
+public class UserModel {
 	//create id for use with MySQL DB
 	private int id;
 	//create firstName string and set its size from 1-30 chars
@@ -36,7 +36,7 @@ public class User {
 	@Size(min=6, max=25, message="Password Confirmation must be between 6 and 25 characters")
 	private String passwordConfirmation; //For registration only
 	//default constructor
-	public User()
+	public UserModel()
 	{
 		this.firstName = "";
 		this.lastName = "";
@@ -46,7 +46,7 @@ public class User {
 
 	}
 	//non-default constructor
-	public User(String firstName, String lastName, String email, String password) {
+	public UserModel(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

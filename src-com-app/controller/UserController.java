@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.app.model.User;
+import com.app.model.UserModel;
 import com.app.model.LoginModel;
 
 /*
@@ -30,71 +30,82 @@ import com.app.model.LoginModel;
 public class UserController {
 	
 	//Create an ArrayList of users to use temporarily until we hook up a MySQL DB
-	private List<User> users = new ArrayList<User>();
+	private List<UserModel> users = new ArrayList<UserModel>();
 	
-	//Create Method for linking to register view
-	@RequestMapping(path="/register", method=RequestMethod.GET)
-	public ModelAndView displayRegister()
+	//Create method for linking to login/register view
+	@RequestMapping(path="login", method=RequestMethod.GET)
+	public ModelAndView displayLog()
 	{
-		//return register view
-		return new ModelAndView("register", "user", new User());
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("login", new LoginModel());
+		mv.addObject("user", new UserModel());
+		mv.setViewName("loginReg");
+		
+		return mv;
 	}
-	
-	//create method for linking to login view
-	@RequestMapping(path="/login", method=RequestMethod.GET)
-	public ModelAndView displayLogin() 
+	@RequestMapping(path="/loginUser", method=RequestMethod.POST)
+	public ModelAndView loginUser(@Valid @ModelAttribute("login")LoginModel login, BindingResult resultLogin, @Valid @ModelAttribute("user")UserModel user, BindingResult resultuser)
 	{
-		//add user to list for testing
-		users.add(new User("William", "Bierer", "Will@gmail.com", "password"));
-		//return login view
-		return new ModelAndView("login", "login", new LoginModel());
-	}
-	
-	//create registration action for use with the register form.  Use the LoginModel object as the model
-	@RequestMapping(path="/adduser", method=RequestMethod.POST)
-	public ModelAndView addUser(@Valid @ModelAttribute("user")User user, BindingResult result) 
-	{
-		//validate all fields on the form
-		if (result.hasErrors())
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user", new UserModel());
+		
+		if(resultLogin.hasErrors())
 		{
-			return new ModelAndView("register", "user", user);
+			mv.addObject("login", login);
+			mv.setViewName("loginReg");
+			return mv;
+		}
+		//run a foreach loop to read all users in the arraylist
+				for(UserModel u : users)
+				{
+					//check if the email and password entered is equal to any of the users in the list
+					if(login.getEmail().equals(u.getEmail())  && login.getPassword().equals(u.getPassword()))
+					{
+						//if so, redirect to main view
+						mv.addObject("login", login);
+						mv.setViewName("main");
+						return mv;
+					}
+				}
+				//if not, refresh the login view
+				mv.addObject("login", new LoginModel());
+				mv.setViewName("loginReg");
+				return mv;
+	}
+	@RequestMapping(path="/registerUser", method=RequestMethod.POST)
+	public ModelAndView registerUser(@Valid @ModelAttribute("user")UserModel user, BindingResult resultUser, @Valid @ModelAttribute("login")LoginModel login, BindingResult resultLogin)
+	{
+		ModelAndView mv = new ModelAndView();
+		
+		if(resultUser.hasErrors())
+		{
+			mv.addObject("user", user);
+			mv.addObject("login", new LoginModel());
+			mv.setViewName("loginReg");
+			return mv;
 		}
 		
 		//Check if password field is equal to password confirmation field
-		if(user.getPassword().equals(user.getPasswordConfirmation()))
-		{
-			//if so, add user to the arraylist and direct to the login view
-			users.add(user);
-			return new ModelAndView("login", "login", new LoginModel());
-		}
-		else
-		{
-			//if not, display error showing passwords do not match and refresh the register view
-			result.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
-			return new ModelAndView("register", "user", user);
-		}
+				if(user.getPassword().equals(user.getPasswordConfirmation()))
+				{
+					//if so, add user to the arraylist and direct to the login view
+					users.add(user);
+					login.setEmail(user.getEmail());
+					mv.addObject("user", user);
+					mv.addObject("login", login);
+					mv.setViewName("loginReg");
+					return mv;
+				}
+				else
+				{
+					//if not, display error showing passwords do not match and refresh the register view
+					resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
+					mv.addObject("user", user);
+					mv.addObject("login", login);
+					mv.setViewName("loginReg");
+					return mv;
+				}
+		
 	}
 	
-	//create login action for use with the login form.  use the User object as the model
-	@RequestMapping(path="/verify", method=RequestMethod.POST)
-	public ModelAndView login(@Valid @ModelAttribute("login")LoginModel login, BindingResult result)
-	{
-		//validate all fields on the form
-		if (result.hasErrors())
-		{
-			return new ModelAndView("login", "login", login);
-		}
-		//run a foreach loop to read all users in the arraylist
-		for(User u : users)
-		{
-			//check if the email and password entered is equal to any of the users in the list
-			if(login.getEmail().equals(u.getEmail())  && login.getPassword().equals(u.getPassword()))
-			{
-				//if so, redirect to main view
-				return new ModelAndView("main", "login", login);
-			}
-		}
-		//if not, refresh the login view
-		return new ModelAndView("login", "login", login);
-	}
 }
