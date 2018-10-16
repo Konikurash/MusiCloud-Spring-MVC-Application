@@ -9,7 +9,7 @@
 		<put-attribute name="footer" value="/WEB-INF/layouts/template/footer.jsp" />
 	</definition>
 	    <definition name="loginPageTemplate" template="/WEB-INF/layouts/template/loginPageTemplate.jsp">
-		<put-attribute name="title" value="Home" />
+		<put-attribute name="title" value="Login" />
 		<put-attribute name="header" value="/WEB-INF/layouts/template/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/layouts/template/footer.jsp" />

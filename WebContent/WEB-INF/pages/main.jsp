@@ -14,12 +14,15 @@
 <div class="row registration-module-container">
 <div class="col-md-4">
 </div>
-<div class="col-md-5 login-module">
+<div class="col-md-6 login-module">
 	<h2>Main Page</h2>
 	<br>
 	<p>You currently have no songs in your library!</p>
 	<br>
 	<p>Try uploading a song to the cloud!</p>
+	j
+	<form:form method="POST" modelAttribute="songs" action="addSong">
+	</form:form>
 </div>
 </div>
 

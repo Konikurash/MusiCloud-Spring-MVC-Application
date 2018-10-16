@@ -10,7 +10,7 @@ import com.app.business.SongsBusinessService;
 import com.app.business.UsersBusinessInterface;
 import com.app.business.UsersBusinessService;
 import com.app.controller.UserController;
-import com.app.controller.SongController;
+import com.app.controller.LibraryController;
 
 @Configuration
 public class ApplicationConfig {
@@ -28,10 +28,10 @@ public class ApplicationConfig {
 		return new UsersBusinessService();
 	}
 	
-	@Bean(name="songController")
-	public SongController getSongController()
+	@Bean(name="libraryController")
+	public LibraryController getSongController()
 	{
-		return new SongController();
+		return new LibraryController();
 	}
 	
 	@Bean(name="songsService", initMethod="init", destroyMethod="destroy")

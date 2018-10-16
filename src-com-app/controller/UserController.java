@@ -72,8 +72,8 @@ public class UserController {
 					if(login.getEmail().equals(u.getEmail())  && login.getPassword().equals(u.getPassword()))
 					{
 						//if so, redirect to main view
-						mv.addObject("login", login);
-						mv.setViewName("main");
+//						mv.addObject("login", login);
+						mv.setViewName("redirect: /library/main");
 						return mv;
 					}
 				}
