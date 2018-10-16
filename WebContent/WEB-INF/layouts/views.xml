@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<!-- 
+  
+  	Handles all views for the application
+  
+  	Created by William Bierer & Brendan Brooks.
+   
+  	VIEW LIST
+  	-
+  	login- logs users into the application and directs them to the main view.  Uses the UserController
+  	register- registers users into an arrayList of users (TODO: SWITCH TO MYSQL DB) and directs to login view once successfully logged in
+  	main- Page where user can view his library of songs, upload new songs, and stream his songs from the application
+  
+  -->
+
+<tiles-definitions>
+	<definition name="main" extends="DefaultTemplate">
+		<put-attribute name="body" value="/WEB-INF/pages/main.jsp" />
+	</definition>
+	<definition name="loginReg" extends="loginPageTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/loginRegistration.jsp" />
+	</definition>
+	<definition name="addSong" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/addSong.jsp" />
+	</definition>
+</tiles-definitions>
