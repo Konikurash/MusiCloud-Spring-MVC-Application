@@ -11,4 +11,7 @@ $(document).ready(function(){
 		$(".login-module-container").css("height", "375px");
 		$("#module-head").text("Login");
 	});
+	$("#addSongToggle").click(function(e){
+		$("#addSongModule").slideToggle();
+	});
 });

@@ -33,9 +33,7 @@
 	<tiles:insertAttribute name="header" />
 
 	<!-- Body Page -->
-	<div align="center">
 		<tiles:insertAttribute name="body" />
-	</div>
 
 	<!-- Footer Page -->
 	<tiles:insertAttribute name="footer" />

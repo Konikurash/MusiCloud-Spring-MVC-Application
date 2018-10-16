@@ -4,7 +4,6 @@
 <!-- 
   
   	Handles all views for the application
-  	TODO Combine login/register views into one view using JQuery to switch the forms
   
   	Created by William Bierer & Brendan Brooks.
    
@@ -17,13 +16,13 @@
   -->
 
 <tiles-definitions>
-	<definition name="login" extends="loginPageTemplate">
-    	<put-attribute name="body" value="/WEB-INF/pages/login.jsp" />
-	</definition>
-	<definition name="main" extends="loginPageTemplate">
+	<definition name="main" extends="DefaultTemplate">
 		<put-attribute name="body" value="/WEB-INF/pages/main.jsp" />
 	</definition>
-	<definition name="register" extends="loginPageTemplate">
-		<put-attribute name="body" value="/WEB-INF/pages/register.jsp" />
+	<definition name="loginReg" extends="loginPageTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/loginRegistration.jsp" />
+	</definition>
+	<definition name="addSong" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/addSong.jsp" />
 	</definition>
 </tiles-definitions>
