@@ -43,6 +43,7 @@ public class UserModel {
 		this.email = "";
 		this.password = "";
 		this.passwordConfirmation = "";
+		this.id = -1;
 
 	}
 	//non-default constructor
@@ -51,6 +52,16 @@ public class UserModel {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.id = -1;
+	}
+	
+	//non-default constructor
+	public UserModel(int id, String firstName, String lastName, String email, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.id = id;
 	}
 	//create getters/setters for all vars
 	public int getId() {

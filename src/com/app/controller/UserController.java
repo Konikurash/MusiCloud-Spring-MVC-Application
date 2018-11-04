@@ -3,6 +3,7 @@ package com.app.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class UserController {
 	//call UsersBusinessService
 	UsersBusinessInterface userService;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	//Create an ArrayList of users to use temporarily until we hook up a MySQL DB
 //	private List<UserModel> users = new ArrayList<UserModel>();
 	
@@ -64,23 +68,20 @@ public class UserController {
 			mv.setViewName("loginReg");
 			return mv;
 		}
-		//run a foreach loop to read all users in the arraylist. We will add more of this logic into the business layer after we get a database and Data Access Layer going
-				for(UserModel u : userService.getUserList())
-				{
-					System.out.println(u);
-					//check if the email and password entered is equal to any of the users in the list
-					if(login.getEmail().equals(u.getEmail())  && login.getPassword().equals(u.getPassword()))
-					{
-						//if so, redirect to main view
-//						mv.addObject("login", login);
-						mv.setViewName("redirect: library/main");
-						return mv;
-					}
-				}
-				//if not, refresh the login view
-				mv.addObject("login", new LoginCredentialsModel());
-				mv.setViewName("loginReg");
-				return mv;
+		
+		UserModel loggedIn = userService.loginUserWithModel(new UserModel("", "", login.getEmail(), login.getPassword()));
+		if(loggedIn.getId() != -1)
+		{
+			httpSession.setAttribute("user", loggedIn);
+			//if so, redirect to main view
+			mv.setViewName("redirect: library/main");
+			return mv;
+		}
+		
+		//if not, refresh the login view
+		mv.addObject("login", new LoginCredentialsModel());
+		mv.setViewName("loginReg");
+		return mv;
 	}
 	@RequestMapping(path="/registerUser", method=RequestMethod.POST)
 	public ModelAndView registerUser(@Valid @ModelAttribute("user")UserModel user, BindingResult resultUser, @Valid @ModelAttribute("login")LoginCredentialsModel login, BindingResult resultLogin)
