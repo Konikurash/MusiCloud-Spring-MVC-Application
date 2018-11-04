@@ -26,7 +26,7 @@ public class ApplicationConfig {
 	}
 	
 
-	@Bean(name="usersService", initMethod="init", destroyMethod="destroy")
+	@Bean(name="usersService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public UsersBusinessInterface getUsersService()
 	{
@@ -39,7 +39,7 @@ public class ApplicationConfig {
 		return new LibraryController();
 	}
 	
-	@Bean(name="songsService", initMethod="init", destroyMethod="destroy")
+	@Bean(name="songsService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public SongsBusinessInterface getSongsService()
 	{

@@ -45,12 +45,12 @@ public class UserDataService implements UserDataAccessInterface {
 
 	@Override
 	public UserModel findByObject(UserModel t) {
-		String sql = "SELECT * FROM users WHERE email='?' AND password='?'";
+		String sql = "SELECT * FROM users WHERE email=? AND password=?";
 		UserModel user = new UserModel();
 		
 		try
 		{
-			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql);
+			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, t.getEmail(), t.getPassword());
 			if (srs.next())
 			{
 				user = new UserModel(srs.getInt("id"), srs.getString("firstName"), srs.getString("lastName"), srs.getString("email"), "");
@@ -58,6 +58,7 @@ public class UserDataService implements UserDataAccessInterface {
 			}
 			else
 			{
+				System.out.println("Could not find that user");
 				return user;
 			}
 		} catch (Exception e) {
