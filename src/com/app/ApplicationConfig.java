@@ -1,5 +1,6 @@
 package com.app;
 
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,8 @@ public class ApplicationConfig {
 		return new UserController();
 	}
 	
-	@Bean(name="usersService")
+
+	@Bean(name="usersService", initMethod="init", destroyMethod="destroy")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public UsersBusinessInterface getUsersService()
 	{
@@ -37,7 +39,7 @@ public class ApplicationConfig {
 		return new LibraryController();
 	}
 	
-	@Bean(name="songsService")
+	@Bean(name="songsService", initMethod="init", destroyMethod="destroy")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public SongsBusinessInterface getSongsService()
 	{

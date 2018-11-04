@@ -44,8 +44,8 @@ public class LibraryController {
 	public ModelAndView addSong(@Valid @ModelAttribute("song")SongModel song, BindingResult resultSong)
 	{
 		ModelAndView mv = new ModelAndView();
-		//The song list will be needed if there are errors or not, so we retrieve it right away
 		
+
 		mv.addObject("songs", songService.getSongList());
 		if(resultSong.hasErrors())
 		{

@@ -42,8 +42,6 @@ public class UserController {
 	@Autowired
 	private HttpSession httpSession;
 	
-	//Create an ArrayList of users to use temporarily until we hook up a MySQL DB
-//	private List<UserModel> users = new ArrayList<UserModel>();
 	
 	//Create method for linking to login/register view
 	@RequestMapping(path="/", method=RequestMethod.GET)
@@ -56,6 +54,7 @@ public class UserController {
 		
 		return mv;
 	}
+	
 	@RequestMapping(path="/loginUser", method=RequestMethod.POST)
 	public ModelAndView loginUser(@Valid @ModelAttribute("login")LoginCredentialsModel login, BindingResult resultLogin, @Valid @ModelAttribute("user")UserModel user, BindingResult resultuser)
 	{
@@ -77,7 +76,6 @@ public class UserController {
 			mv.setViewName("redirect: library/main");
 			return mv;
 		}
-		
 		//if not, refresh the login view
 		mv.addObject("login", new LoginCredentialsModel());
 		mv.setViewName("loginReg");
