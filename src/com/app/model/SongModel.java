@@ -22,7 +22,7 @@ public class SongModel {
 	@Max(value=3000, message="Unreasonable Year")
 	private int year;
 	private String mp3Path;
-	private String ownerEmail;
+	private int userID;
 	
 	public SongModel() {
 		this.id = -1;
@@ -31,17 +31,17 @@ public class SongModel {
 		this.album = "";
 		this.year = 2018;
 		this.mp3Path = "";
-		this.ownerEmail = "";
+		this.userID = -1;
 	}
 
-	public SongModel(int id, String title, String artist, String album, int year, String mp3Path, String ownerEmail) {
+	public SongModel(int id, String title, String artist, String album, int year, String mp3Path, int userID) {
 		this.id = id;
 		this.title = title;
 		this.artist = artist;
 		this.album = album;
 		this.year = year;
 		this.mp3Path = mp3Path;
-		this.ownerEmail = ownerEmail;
+		this.userID = userID;
 	}
 
 	public int getId() {
@@ -92,12 +92,12 @@ public class SongModel {
 		this.mp3Path = mp3Path;
 	}
 
-	public String getOwnerEmail() {
-		return ownerEmail;
+	public int getuserID() {
+		return userID;
 	}
 
-	public void setOwnerEmail(String ownerEmail) {
-		this.ownerEmail = ownerEmail;
+	public void setuserID(int userID) {
+		this.userID = userID;
 	}
 		
 }

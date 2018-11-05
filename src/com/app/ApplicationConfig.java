@@ -11,7 +11,9 @@ import com.app.business.SongsBusinessService;
 import com.app.business.UsersBusinessInterface;
 import com.app.business.UsersBusinessService;
 import com.app.controller.UserController;
+import com.app.data.SongDataService;
 import com.app.data.UserDataService;
+import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.data.interfaces.UserDataAccessInterface;
 import com.app.controller.LibraryController;
 
@@ -50,6 +52,13 @@ public class ApplicationConfig {
 	public UserDataAccessInterface getUserDataService()
 	{
 		return new UserDataService();
+	}
+	
+	@Bean(name="songDataService")
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	public SongDataAccessInterface getSongDataService()
+	{
+		return new SongDataService();
 	}
 	
 	/**

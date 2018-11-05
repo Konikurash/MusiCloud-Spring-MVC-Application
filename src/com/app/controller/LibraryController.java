@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.app.business.SongsBusinessInterface;
 import com.app.model.SongModel;
+import com.app.model.UserModel;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -24,16 +26,25 @@ import javax.validation.Valid;
 public class LibraryController {
 	
 	SongsBusinessInterface songService;
-	//temporary id object until we setup MySQL/Derby DB
-	private int songID = 0;
+	
+	@Autowired
+	private HttpSession httpSession;
 	
 	@RequestMapping(path="/main", method=RequestMethod.GET)
 	public ModelAndView displayLibrary()
 	{
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		System.out.println(sessionUser.getId());
 		ModelAndView mv = new ModelAndView();
 		
+		if(sessionUser == null || sessionUser.getId() == -1)
+		{
+			mv.setViewName("redirect: /");
+			return mv;
+		}
+		
 
-		mv.addObject("songs", songService.getSongList());
+		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
 		mv.addObject("song", new SongModel());
 		mv.setViewName("main");
 		
@@ -44,9 +55,15 @@ public class LibraryController {
 	public ModelAndView addSong(@Valid @ModelAttribute("song")SongModel song, BindingResult resultSong)
 	{
 		ModelAndView mv = new ModelAndView();
+		//The song list will be needed if there are errors or not, so we retrieve it right away
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		if(sessionUser == null || sessionUser.getId() == -1)
+		{
+			mv.setViewName("redirect: /");
+			return mv;
+		}
 		
-
-		mv.addObject("songs", songService.getSongList());
+		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
 		if(resultSong.hasErrors())
 		{
 			mv.addObject("song", song);
@@ -56,11 +73,10 @@ public class LibraryController {
 			return mv;
 		}
 		
-		song.setId(songID);
-		songID++;
 		
 		//Using a song that already exists for now, until we learn how to handle files in Spring
 		song.setMp3Path("/assets/mp3/Ghost of Days Gone By.m4a");
+		song.setuserID(sessionUser.getId());
 		songService.addSong(song);
 		mv.setViewName("redirect: main");
 		
@@ -70,10 +86,17 @@ public class LibraryController {
 	@RequestMapping(path="/deleteSong", method=RequestMethod.POST)
 	public ModelAndView deleteSong(@ModelAttribute("song")SongModel song)
 	{
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
 		ModelAndView mv = new ModelAndView();
+		if(sessionUser == null || sessionUser.getId() == -1)
+		{
+			mv.setViewName("redirect: /");
+			return mv;
+		}
 		
 		songService.removeSong(song.getId());
-		mv.addObject(songService.getSongList());
+		mv.addObject(songService.getSongListByUserId(sessionUser.getId()));
 		mv.setViewName("main");
 		
 		return mv;
@@ -81,7 +104,7 @@ public class LibraryController {
 	}
 	
 	@Autowired
-	public void setOrdersService(SongsBusinessInterface service)
+	public void setSongsService(SongsBusinessInterface service)
 	{
 		this.songService = service;
 	}
