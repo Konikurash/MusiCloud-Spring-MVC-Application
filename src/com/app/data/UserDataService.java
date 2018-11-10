@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.app.data.interfaces.UserDataAccessInterface;
+import com.app.model.ChangePasswordModel;
 import com.app.model.UserModel;
 
 public class UserDataService implements UserDataAccessInterface {
@@ -33,13 +34,33 @@ public class UserDataService implements UserDataAccessInterface {
 
 	@Override
 	public boolean update(UserModel t) {
-		// TODO Auto-generated method stub
+		String sql = "UPDATE users SET firstName=?, lastName=?, email=? WHERE id=?";
+		try
+		{
+			jdbcTemplateObject.update(sql, t.getFirstName(), t.getLastName(), t.getEmail(), t.getId());
+			
+			return true;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
 	@Override
-	public boolean delete(UserModel t) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id) {
+		String sql = "DELETE FROM users WHERE id=?";
+		try
+		{
+			int rows = jdbcTemplateObject.update(sql, id);
+			
+			return rows == 1 ? true : false;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
@@ -77,6 +98,23 @@ public class UserDataService implements UserDataAccessInterface {
 	public UserModel findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public boolean updatePassword(ChangePasswordModel model) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE users SET password=? WHERE id=?";
+		try
+		{
+			int rows = jdbcTemplateObject.update(sql, model.getNewPassword(), model.getId());
+			
+			return rows == 1 ? true : false;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 	
 	@Autowired

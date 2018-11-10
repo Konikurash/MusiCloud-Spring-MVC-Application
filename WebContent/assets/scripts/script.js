@@ -14,4 +14,9 @@ $(document).ready(function(){
 	$("#addSongToggle").click(function(e){
 		$("#addSongModule").slideToggle();
 	});
+	
+	$("#deleteAccount").click(function(e){
+		$(this).hide();
+		$("#delete-confirmation").toggle();
+	});
 });

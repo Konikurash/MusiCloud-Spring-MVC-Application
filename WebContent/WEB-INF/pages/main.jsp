@@ -10,13 +10,6 @@
   --	Created by William Bierer & Brendan Brooks.
   -- 
   -->
-
-<nav class="navbar navbar-inverse navbar-static-top">
-  <ul class="nav navbar-nav">
-    <p class="navbar-text navbar-right"><a href="/" class="navbar-link">Logout</a></p>
-  </ul>
-</nav>
-
 <div class="music-module-container">
 <div class="row">
 <div class="col-md-2">

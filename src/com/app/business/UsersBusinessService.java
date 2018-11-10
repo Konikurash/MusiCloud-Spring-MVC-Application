@@ -3,7 +3,7 @@ package com.app.business;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.app.data.interfaces.UserDataAccessInterface;
-
+import com.app.model.ChangePasswordModel;
 import com.app.model.UserModel;
 
 public class UsersBusinessService implements UsersBusinessInterface {
@@ -22,6 +22,18 @@ public class UsersBusinessService implements UsersBusinessInterface {
 	}
 	
 	@Override
+	public boolean updateUser(UserModel user) {
+		// TODO Auto-generated method stub
+		return service.update(user);
+	}
+
+	@Override
+	public boolean updatePassword(ChangePasswordModel model) {
+		// TODO Auto-generated method stub
+		return service.updatePassword(model);
+	}
+	
+	@Override
 	public UserModel loginUserWithModel(UserModel model) {
 		UserModel user = service.findByObject(model);
 		System.out.println(model.getEmail() + " | " + model.getPassword());
@@ -31,7 +43,7 @@ public class UsersBusinessService implements UsersBusinessInterface {
 	@Override
 	public boolean removeUser(int id) {
 
-		return false;
+		return service.delete(id);
 	}
 
 	@Override

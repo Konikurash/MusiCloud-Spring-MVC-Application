@@ -25,4 +25,7 @@
 	<definition name="addSong" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/addSong.jsp" />
 	</definition>
+		<definition name="editUser" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/editUser.jsp" />
+	</definition>
 </tiles-definitions>

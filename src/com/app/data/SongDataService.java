@@ -40,7 +40,7 @@ public class SongDataService implements SongDataAccessInterface {
 	}
 
 	@Override
-	public boolean delete(SongModel t) {
+	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 import com.app.model.UserModel;
 import com.app.business.UsersBusinessInterface;
+import com.app.model.ChangePasswordModel;
 import com.app.model.LoginCredentialsModel;
 
 /*
@@ -33,7 +34,6 @@ import com.app.model.LoginCredentialsModel;
  */
 
 @Controller
-//@RequestMapping("/user")
 public class UserController {
 	
 	//call UsersBusinessService
@@ -42,12 +42,20 @@ public class UserController {
 	@Autowired
 	private HttpSession httpSession;
 	
-	
 	//Create method for linking to login/register view
-	@RequestMapping(path="/", method=RequestMethod.GET)
+	@RequestMapping(path= { "/", "/login" }, method=RequestMethod.GET)
 	public ModelAndView displayLog()
 	{
 		ModelAndView mv = new ModelAndView();
+		
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
+		if(sessionUser != null)
+		{
+			mv.setViewName("redirect: library/main");
+			return mv;
+		}
+		
 		mv.addObject("login", new LoginCredentialsModel());
 		mv.addObject("user", new UserModel());
 		mv.setViewName("loginReg");
@@ -114,6 +122,118 @@ public class UserController {
 			mv.setViewName("loginReg");
 			return mv;
 		}
+	}
+	
+	@RequestMapping(path="/settings", method=RequestMethod.GET)
+	public ModelAndView showEditPage()
+	{
+		ModelAndView mv = new ModelAndView();
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
+		if(sessionUser == null)
+		{
+			return new ModelAndView("redirect: login");
+		}
+		
+		mv.addObject("user", sessionUser);
+		mv.addObject("passwordModel", new ChangePasswordModel());
+		mv.setViewName("editUser");
+		return mv;
+		
+	}
+	
+	@RequestMapping(path="/updateUser", method=RequestMethod.POST)
+	public ModelAndView updateUser(@Valid @ModelAttribute("user")UserModel user, BindingResult resultUser)
+	{
+		ModelAndView mv = new ModelAndView();
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
+		if(sessionUser == null)
+		{
+			mv.setViewName("redirect: login");
+			return mv;
+		}
+		
+		user.setId(sessionUser.getId());
+		if(resultUser.hasFieldErrors("firstName") || resultUser.hasFieldErrors("lastName") || resultUser.hasFieldErrors("email"))
+		{
+			mv.addObject("passwordModel", new ChangePasswordModel());
+			mv.addObject("user", user);
+			mv.setViewName("editUser");
+			return mv;
+		}
+		
+		if(userService.updateUser(user))
+		{
+			httpSession.setAttribute("user", user);
+			mv.setViewName("redirect: settings");
+			return mv;
+		}
+		
+		mv.addObject("passwordModel", new ChangePasswordModel());
+		mv.addObject("user", sessionUser);
+		mv.setViewName("editUser");
+		return mv;
+	}
+	
+	@RequestMapping(path="/updatePassword", method=RequestMethod.POST)
+	public ModelAndView updatePassword(@Valid @ModelAttribute("passwordModel")ChangePasswordModel passwordModel, BindingResult resultUser)
+	{
+		ModelAndView mv = new ModelAndView();
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
+		if(sessionUser == null)
+		{
+			mv.setViewName("redirect: login");
+			return mv;
+		}
+		
+		passwordModel.setId(sessionUser.getId());
+		
+		if(resultUser.hasFieldErrors("newPassword") || resultUser.hasFieldErrors("newPasswordConfirmation") || !passwordModel.getNewPassword().equals(passwordModel.getNewPasswordConfirmation()))
+		{
+			mv.addObject("user", sessionUser);
+			mv.addObject("passwordModel", new ChangePasswordModel());
+			mv.setViewName("editUser");
+			return mv;
+		}
+		
+		if(userService.updatePassword(passwordModel))
+		{
+			mv.setViewName("redirect: settings");
+			return mv;
+		}
+		
+		mv.addObject("user", sessionUser);
+		mv.addObject("passwordModel", new ChangePasswordModel());
+		mv.setViewName("editUser");
+		return mv;
+	}
+	
+	@RequestMapping(path="/logout", method=RequestMethod.GET)
+	public ModelAndView logoutUser()
+	{
+		httpSession.removeAttribute("user");
+		
+		return new ModelAndView("redirect: login");
+	}
+	
+	@RequestMapping(path="/deleteAccount", method=RequestMethod.GET)
+	public ModelAndView deleteUser()
+	{
+		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		ModelAndView mv = new ModelAndView();
+		
+		if(sessionUser == null)
+		{
+			mv.setViewName("redirect: login");
+			return mv;
+		}
+		
+		userService.removeUser(sessionUser.getId());
+		httpSession.removeAttribute("user");
+		
+		return new ModelAndView("redirect: login");
 	}
 	
 	@Autowired
