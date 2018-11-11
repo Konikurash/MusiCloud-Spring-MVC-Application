@@ -31,8 +31,6 @@
  <!-- Get custom background image -->
 <spring:url value="/assets/images/blurred-audience.png" var="backgroundImage" />
 <body style="background: url(${backgroundImage}) no-repeat fixed center !important; background-size: cover !important;">
-	<!-- Header -->
-	<tiles:insertAttribute name="header" />
 
 	<!-- Body Page -->
 	<div align="center">
