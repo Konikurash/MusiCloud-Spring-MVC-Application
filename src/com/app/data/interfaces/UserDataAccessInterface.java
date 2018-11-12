@@ -7,4 +7,5 @@ import com.app.model.UserModel;
 public interface UserDataAccessInterface extends DataAccessInterface<UserModel> {
 	public UserModel findByEmail(String email);
 	public boolean updatePassword(ChangePasswordModel model);
+	public boolean delete(int id);
 }

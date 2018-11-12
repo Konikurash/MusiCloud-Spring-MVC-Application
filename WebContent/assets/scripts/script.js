@@ -19,4 +19,8 @@ $(document).ready(function(){
 		$(this).hide();
 		$("#delete-confirmation").toggle();
 	});
+	
+	$(".editButton").click(function(e){
+        $(this).siblings(".droplist").slideToggle();
+    });
 });

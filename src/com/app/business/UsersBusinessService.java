@@ -36,7 +36,7 @@ public class UsersBusinessService implements UsersBusinessInterface {
 	@Override
 	public UserModel loginUserWithModel(UserModel model) {
 		UserModel user = service.findByObject(model);
-		System.out.println(model.getEmail() + " | " + model.getPassword());
+		//System.out.println(model.getEmail() + " | " + model.getPassword());
 		return user;
 	}
 

@@ -8,6 +8,8 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+
 import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.model.SongModel;
 
@@ -35,13 +37,32 @@ public class SongDataService implements SongDataAccessInterface {
 
 	@Override
 	public boolean update(SongModel t) {
-		// TODO Auto-generated method stub
+		String sql = "UPDATE song SET TITLE = ?, ALBUM= ?, ARTIST= ?, YEAR = ?, MP3PATH = ? WHERE ID = ? AND USERID = ?";
+		
+		try {
+			jdbcTemplateObject.update(sql, t.getTitle(), t.getAlbum(), t.getArtist(), t.getYear(), t.getMp3Path(), t.getId(), t.getuserID());
+			
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
+		
 	}
 
 	@Override
-	public boolean delete(int id) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id, int userId) {
+String sql = "DELETE FROM song WHERE ID = ? AND USERID = ?";
+		
+		try {
+			int rows = jdbcTemplateObject.update(sql, id, userId);
+			
+			return rows == 1 ? true : false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -72,7 +93,6 @@ public class SongDataService implements SongDataAccessInterface {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return songList;
 		}
 		return songList;
 	}

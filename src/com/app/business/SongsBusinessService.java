@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.model.SongModel;
 
-public class SongsBusinessService implements SongsBusinessInterface {
+public class SongsBusinessService implements SongsBusinessInterface <SongModel> {
 	
 	private SongDataAccessInterface songDataService;
 	
 	public SongsBusinessService()
 	{
-		//songs.add(new SongModel(1, "For The One", "Rezwana Derbyshire & Brendan Brooks", "For The One", 2018, "/assets/mp3/Demo10-FTO.mp3", "bbrooksgo@gmail.com"));
-		//songs.add(new SongModel(3, "Traipse", "Tremonti", "A Dying Machine", 2018, "/assets/mp3/Traipse.m4a", "bbrooksgo@gmail.com"));
+
 	}
 
 	@Override
@@ -30,9 +29,9 @@ public class SongsBusinessService implements SongsBusinessInterface {
 	}
 
 	@Override
-	public boolean removeSong(int id) {
-		SongModel s = getSongById(id);
-		return true;
+	public boolean removeSong(int id, int userId) {
+		
+		return songDataService.delete(id, userId);
 	}
 
 	public SongModel getSongById(int id) {
@@ -61,6 +60,11 @@ public class SongsBusinessService implements SongsBusinessInterface {
 	public List<SongModel> getSongListByUserId(int id) {
 		// TODO Auto-generated method stub
 		return songDataService.findByUserId(id);
+	}
+
+	@Override
+	public boolean updateSong(SongModel song) {
+		return songDataService.update(song);
 	}
 
 }
