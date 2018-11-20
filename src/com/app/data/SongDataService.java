@@ -13,12 +13,25 @@ import org.springframework.dao.DataAccessException;
 import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.model.SongModel;
 
+/**
+ * Data service for songs.  Reads and writes to MySQL DB
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
 public class SongDataService implements SongDataAccessInterface {
 
 	@SuppressWarnings("unused")
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 	
+	/**
+	 * Create song method
+	 * 
+	 * @param SongModel t
+	 * @return boolean value
+	 */
 	@Override
 	public boolean create(SongModel t) {
 		String sql = "INSERT INTO song(TITLE, ALBUM, ARTIST, MP3PATH, USERID, YEAR) VALUES(?, ?, ?, ?, ?, ?)";
@@ -35,6 +48,12 @@ public class SongDataService implements SongDataAccessInterface {
 		return false;
 	}
 
+	/**
+	 * Update song method
+	 * 
+	 * @param SongModel t
+	 * @return boolean value
+	 */
 	@Override
 	public boolean update(SongModel t) {
 		String sql = "UPDATE song SET TITLE = ?, ALBUM= ?, ARTIST= ?, YEAR = ?, MP3PATH = ? WHERE ID = ? AND USERID = ?";
@@ -51,6 +70,13 @@ public class SongDataService implements SongDataAccessInterface {
 		
 	}
 
+	/**
+	 * Delete song method
+	 * 
+	 * @param int id
+	 * @param int userId
+	 * @return boolean value
+	 */
 	@Override
 	public boolean delete(int id, int userId) {
 String sql = "DELETE FROM song WHERE ID = ? AND USERID = ?";
@@ -78,6 +104,12 @@ String sql = "DELETE FROM song WHERE ID = ? AND USERID = ?";
 		return null;
 	}
 
+	/**
+	 * Gets list of songs using UserID as where clause
+	 * 
+	 * @param int id
+	 * @return List<SongModel>
+	 */
 	@Override
 	public List<SongModel> findByUserId(int id) {
 		String sql = "SELECT * FROM song WHERE USERID = ?";
@@ -97,6 +129,11 @@ String sql = "DELETE FROM song WHERE ID = ? AND USERID = ?";
 		return songList;
 	}
 	
+	/**
+	 * Audiowired method used for setting the dataSource
+	 * 
+	 * @param DataSource dataSource
+	 */
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;

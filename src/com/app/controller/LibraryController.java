@@ -22,22 +22,38 @@ import com.app.model.UserModel;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+/**
+ * Controller for handling all song related Requests
+ * Uses SongBusinessService
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
 @Controller
 @RequestMapping("/library")
 public class LibraryController {
 	
-	SongsBusinessInterface songService;
+	private SongsBusinessInterface songService;
 	
 	@Autowired
 	private HttpSession httpSession;
 	
+	/**
+	 * Method that displays songs uploaded by the user to the main view
+	 * Maps to /main
+	 * 
+	 * @return ModelAndView mv
+	 */
 	@RequestMapping(path="/main", method=RequestMethod.GET)
 	public ModelAndView displayLibrary()
 	{
+		//get user from the session
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
 		//System.out.println(sessionUser.getId());
 		ModelAndView mv = new ModelAndView();
 		
+		//check if sessionUser exists. if not, redirect to login view
 		if(sessionUser == null || sessionUser.getId() == -1)
 		{
 			mv.setViewName("redirect: /MusiCloud");
@@ -53,19 +69,29 @@ public class LibraryController {
 		return mv;
 	}
 	
+	/**
+	 * Method that adds a new song to the database using songService
+	 * Maps to /addSong
+	 * 
+	 * @return ModelAndView mv
+	 */
 	@RequestMapping(path="/addSong", method=RequestMethod.POST)
 	public ModelAndView addSong(@Valid @ModelAttribute("song")SongModel song, BindingResult resultSong)
 	{
 		ModelAndView mv = new ModelAndView();
 		//The song list will be needed if there are errors or not, so we retrieve it right away
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
+		
+		//check if sessionUser exists. if not, redirect to login view
 		if(sessionUser == null || sessionUser.getId() == -1)
 		{
 			mv.setViewName("redirect: /MusiCloud");
 			return mv;
 		}
 		
+		
 		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
+		//check for form errors
 		if(resultSong.hasErrors())
 		{
 			mv.addObject("song", song);
@@ -87,12 +113,21 @@ public class LibraryController {
 		return mv;
 	}
 	
+	/**
+	 * Method that deletes a song from the database using songService
+	 * gets the songID from the URI
+	 * Maps to /deleteSong/{id}
+	 * 
+	 * @param int id
+	 * @return ModelAndView mv
+	 */
 	@RequestMapping(path="/deleteSong/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteSong(@PathVariable int id)
 	{
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
 		
 		ModelAndView mv = new ModelAndView();
+		//check if sessionUser exists. if not, redirect to login view
 		if(sessionUser == null || sessionUser.getId() == -1)
 		{
 			mv.setViewName("redirect: /MusiCloud");
@@ -109,11 +144,20 @@ public class LibraryController {
 		
 	}
 	
+	/**
+	 * Method that updates a song from the database using songService
+	 * Maps to /updateSong
+	 * 
+	 * @param SongModel editSong
+	 * @param BindingResult editResult
+	 * @return ModelAndView mv
+	 */
 	@RequestMapping(path="/updateSong", method=RequestMethod.POST)
 	public ModelAndView updateSong(@ModelAttribute("editSong")SongModel editSong, BindingResult editResult)
 	{
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
 		ModelAndView mv = new ModelAndView();
+		//check if sessionUser exists. if not, redirect to login view
 		if(sessionUser == null || sessionUser.getId() == -1)
 		{
 			mv.setViewName("redirect: /MusiCloud");
@@ -132,6 +176,11 @@ public class LibraryController {
 		
 	}
 	
+	/**
+	 * Autowired method that sets the songService
+	 * 
+	 * @param SongsBusinessInterface service
+	 */
 	@Autowired
 	public void setSongsService(SongsBusinessInterface service)
 	{

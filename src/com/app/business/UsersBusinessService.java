@@ -6,10 +6,23 @@ import com.app.data.interfaces.UserDataAccessInterface;
 import com.app.model.ChangePasswordModel;
 import com.app.model.UserModel;
 
+/**
+ * Business service for songs.  utilizes userDataService
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
 public class UsersBusinessService implements UsersBusinessInterface {
 
 	private UserDataAccessInterface service;
 
+	/**
+	 * add user method
+	 * 
+	 * @param UserModel user
+	 * @return boolean value
+	 */
 	@Override
 	public boolean addUser(UserModel user) {
 		if(user.equals(null))
@@ -21,18 +34,36 @@ public class UsersBusinessService implements UsersBusinessInterface {
 		return service.create(user);
 	}
 	
+	/**
+	 * update user method
+	 * 
+	 * @param UserModel user
+	 * @return boolean value
+	 */
 	@Override
 	public boolean updateUser(UserModel user) {
 		// TODO Auto-generated method stub
 		return service.update(user);
 	}
 
+	/**
+	 * update user password method
+	 * 
+	 * @param ChangePasswordModel model
+	 * @return boolean value
+	 */
 	@Override
 	public boolean updatePassword(ChangePasswordModel model) {
 		// TODO Auto-generated method stub
 		return service.updatePassword(model);
 	}
 	
+	/**
+	 * method used for logging user into the application
+	 * 
+	 * @param UserModel model
+	 * @return UserModel user
+	 */
 	@Override
 	public UserModel loginUserWithModel(UserModel model) {
 		UserModel user = service.findByObject(model);
@@ -40,6 +71,12 @@ public class UsersBusinessService implements UsersBusinessInterface {
 		return user;
 	}
 
+	/**
+	 * Remove user method
+	 * 
+	 * @param int id
+	 * @return boolean value
+	 */
 	@Override
 	public boolean removeUser(int id) {
 
@@ -51,6 +88,11 @@ public class UsersBusinessService implements UsersBusinessInterface {
 		return null;
 	}
 	
+	/**
+	 * Autowired method for setting userDataService to UserDataAccessInterface
+	 * 
+	 * @param UserDataAccessInterface service
+	 */
 	@Autowired
 	public void setUserDataService(UserDataAccessInterface service)
 	{

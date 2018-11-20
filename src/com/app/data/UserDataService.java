@@ -10,12 +10,25 @@ import com.app.data.interfaces.UserDataAccessInterface;
 import com.app.model.ChangePasswordModel;
 import com.app.model.UserModel;
 
+/**
+ * Data service for User.  Reads and writes to MySQL DB
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
 public class UserDataService implements UserDataAccessInterface {
 	
 	@SuppressWarnings("unused")
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
+	/**
+	 * Create user method
+	 * 
+	 * @param UserModel t
+	 * @return boolean value
+	 */
 	@Override
 	public boolean create(UserModel t) {
 		String sql = "INSERT INTO users(firstName, lastName, email, password) VALUES(?, ?, ?, ?)";
@@ -32,6 +45,12 @@ public class UserDataService implements UserDataAccessInterface {
 		return false;
 	}
 
+	/**
+	 * Update user method
+	 * 
+	 * @param UserModel t
+	 * @return boolean value
+	 */
 	@Override
 	public boolean update(UserModel t) {
 		String sql = "UPDATE users SET firstName=?, lastName=?, email=? WHERE id=?";
@@ -48,6 +67,12 @@ public class UserDataService implements UserDataAccessInterface {
 		return false;
 	}
 
+	/**
+	 * Delete user method
+	 * 
+	 * @param UserModel t
+	 * @return boolean value
+	 */
 	@Override
 	public boolean delete(int id) {
 		String sql = "DELETE FROM users WHERE id=?";
@@ -64,6 +89,12 @@ public class UserDataService implements UserDataAccessInterface {
 		return false;
 	}
 
+	/**
+	 * Finds a user based on a model, used for logging in
+	 * 
+	 * @param UserModel t
+	 * @return UserModel
+	 */
 	@Override
 	public UserModel findByObject(UserModel t) {
 		String sql = "SELECT * FROM users WHERE email=? AND password=?";
@@ -100,6 +131,12 @@ public class UserDataService implements UserDataAccessInterface {
 		return null;
 	}
 	
+	/**
+	 * Update password method
+	 * 
+	 * @param ChangePasswordModel model
+	 * @return boolean value
+	 */
 	@Override
 	public boolean updatePassword(ChangePasswordModel model) {
 		// TODO Auto-generated method stub
@@ -117,6 +154,11 @@ public class UserDataService implements UserDataAccessInterface {
 		return false;
 	}
 	
+	/**
+	 * Audiowired method used for setting the dataSource
+	 * 
+	 * @param DataSource dataSource
+	 */
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
