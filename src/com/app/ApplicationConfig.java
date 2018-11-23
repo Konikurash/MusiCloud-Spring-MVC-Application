@@ -17,6 +17,13 @@ import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.data.interfaces.UserDataAccessInterface;
 import com.app.controller.LibraryController;
 
+/**
+ * Configuration class that handles all spring beans (singleton scoped)
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
 @Configuration
 public class ApplicationConfig {
 	
@@ -27,6 +34,11 @@ public class ApplicationConfig {
 	}
 	
 
+	/**
+	 * Declares bean for UsersBusinessService (singleton scoped)
+	 * 
+	 * @return UsersBusinessInterface
+	 */
 	@Bean(name="usersService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public UsersBusinessInterface getUsersService()
@@ -34,12 +46,22 @@ public class ApplicationConfig {
 		return new UsersBusinessService();
 	}
 	
+	/**
+	 * Declares bean for LibraryController (singleton scoped)
+	 * 
+	 * @return LibraryController
+	 */
 	@Bean(name="libraryController")
 	public LibraryController getSongController()
 	{
 		return new LibraryController();
 	}
 	
+	/**
+	 * Declares bean for SongsBusinessService (singleton scoped)
+	 * 
+	 * @return SongsBusinessInterface
+	 */
 	@Bean(name="songsService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public SongsBusinessInterface getSongsService()
@@ -47,6 +69,11 @@ public class ApplicationConfig {
 		return new SongsBusinessService();
 	}
 	
+	/**
+	 * Declares bean for UsersDataService (singleton scoped)
+	 * 
+	 * @return UsersDataAccessInterface
+	 */
 	@Bean(name="userDataService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public UserDataAccessInterface getUserDataService()
@@ -54,6 +81,11 @@ public class ApplicationConfig {
 		return new UserDataService();
 	}
 	
+	/**
+	 * Declares bean for SongsDataService (singleton scoped)
+	 * 
+	 * @return SongsDataAccessInterface
+	 */
 	@Bean(name="songDataService")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public SongDataAccessInterface getSongDataService()

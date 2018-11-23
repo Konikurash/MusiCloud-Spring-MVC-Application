@@ -8,16 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.app.data.interfaces.SongDataAccessInterface;
 import com.app.model.SongModel;
 
-public class SongsBusinessService implements SongsBusinessInterface {
+/**
+ * Business service for songs.  utilizes songDataService
+ *
+ * @author William Bierer
+ * @author Brendan Brooks
+ * @version .05
+ */
+public class SongsBusinessService implements SongsBusinessInterface <SongModel> {
 	
 	private SongDataAccessInterface songDataService;
 	
+	/**
+	 * Default constructor
+	 */
 	public SongsBusinessService()
 	{
-		//songs.add(new SongModel(1, "For The One", "Rezwana Derbyshire & Brendan Brooks", "For The One", 2018, "/assets/mp3/Demo10-FTO.mp3", "bbrooksgo@gmail.com"));
-		//songs.add(new SongModel(3, "Traipse", "Tremonti", "A Dying Machine", 2018, "/assets/mp3/Traipse.m4a", "bbrooksgo@gmail.com"));
+
 	}
 
+	/**
+	 * add song method
+	 * 
+	 * @param SongModel song
+	 * @return boolean value
+	 */
 	@Override
 	public boolean addSong(SongModel song) {
 		if(song.equals(null))
@@ -29,12 +44,20 @@ public class SongsBusinessService implements SongsBusinessInterface {
 		return songDataService.create(song);
 	}
 
+	/**
+	 * remove song method
+	 * 
+	 * @param int id
+	 * @param int userId
+	 * @return boolean value
+	 */
 	@Override
-	public boolean removeSong(int id) {
-		SongModel s = getSongById(id);
-		return true;
+	public boolean removeSong(int id, int userId) {
+		
+		return songDataService.delete(id, userId);
 	}
 
+	
 	public SongModel getSongById(int id) {
 		return null;
 	}
@@ -51,16 +74,38 @@ public class SongsBusinessService implements SongsBusinessInterface {
 		
 	}
 	
+	/**
+	 * Autowired method for setting songDataService to SongDataAccessInterface
+	 * 
+	 * @param SongDataAccessInterface service
+	 */
 	@Autowired
 	public void setSongDataAccessInterface(SongDataAccessInterface service)
 	{
 		this.songDataService = service;
 	}
 
+	/**
+	 * Gets list of songs based on userId
+	 * 
+	 * @param int id
+	 * @return List<SongModel>
+	 */
 	@Override
 	public List<SongModel> getSongListByUserId(int id) {
 		// TODO Auto-generated method stub
 		return songDataService.findByUserId(id);
+	}
+	
+	/**
+	 * Update song method
+	 * 
+	 * @param SongModel song
+	 * @return boolean value
+	 */
+	@Override
+	public boolean updateSong(SongModel song) {
+		return songDataService.update(song);
 	}
 
 }

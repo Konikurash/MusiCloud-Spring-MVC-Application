@@ -3,15 +3,13 @@ package com.app.model;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/*
+/**
  *  User object used with the registration form and all register actions in the UserController
- *  Used for data validation and for containing all the data needed for registering an account
- *  id will be used when we hook up a MySQL DB  TODO Hook up MySQL DB
+ *  User persists to the session after successful login
  * 
- *  Created by William Bierer & Brendan Brooks.
+ *  @author William Bierer
+ *  @author Brendan Brooks
  */
-
-
 public class UserModel {
 	//create id for use with MySQL DB
 	private int id;
@@ -35,7 +33,12 @@ public class UserModel {
 	@NotNull(message="You must confirm your passowrd")
 	@Size(min=6, max=25, message="Password Confirmation must be between 6 and 25 characters")
 	private String passwordConfirmation; //For registration only
-	//default constructor
+	
+	/**
+	 * Default constructor method
+	 * 
+	 * 
+	 */
 	public UserModel()
 	{
 		this.firstName = "";
@@ -46,7 +49,15 @@ public class UserModel {
 		this.id = -1;
 
 	}
-	//non-default constructor
+
+	/**
+	 * Non default constructor method
+	 * 
+	 * @param String firstName : represents first name of user
+	 * @param String lastName : represents last name of user
+	 * @param String email : represents email
+	 * @param String password : represents password of the user
+	 */
 	public UserModel(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -55,7 +66,11 @@ public class UserModel {
 		this.id = -1;
 	}
 	
-	//non-default constructor
+	/**
+	 * Default constructor method
+	 * 
+	 * 
+	 */
 	public UserModel(int id, String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -63,51 +78,123 @@ public class UserModel {
 		this.password = password;
 		this.id = id;
 	}
-	//create getters/setters for all vars
+
+	/**
+	 * Getter method for id
+	 * 
+	 *
+	 * @return int id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Setter method for id
+	 * 
+	 *
+	 * @param int id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Getter method for firstName
+	 * 
+	 *
+	 * @return String firstName
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * Setter method for firstName
+	 * 
+	 *
+	 * @param String firstName
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	/**
+	 * Getter method for lastName
+	 * 
+	 *
+	 * @return String lastName
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * Setter method for lastName
+	 * 
+	 *
+	 * @param String lastName
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	/**
+	 * Getter method for email
+	 * 
+	 *
+	 * @return String email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * Setter method for email
+	 * 
+	 *
+	 * @param String email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * Getter method for password
+	 * 
+	 *
+	 * @return String password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Setter method for password
+	 * 
+	 *
+	 * @param String password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
+	/**
+	 * Getter method for passwordConfirmation
+	 * 
+	 *
+	 * @return String passwordConfirmation
+	 */
 	public String getPasswordConfirmation() {
 		return passwordConfirmation;
 	}
 
+	/**
+	 * Setter method for passwordConfirmation
+	 * 
+	 *
+	 * @param String passwordConfirmation
+	 */
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
 	}

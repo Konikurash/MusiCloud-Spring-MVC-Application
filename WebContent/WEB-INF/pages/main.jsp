@@ -27,7 +27,8 @@
 	<div class="lighter-module">
 	<div id="addSongToggle"><button class="btn btn-orange" id="">Add</button></div>
 	<div id="addSongModule" style="display: none;">
-		<form:form method="POST" class="form-inline" modelAttribute="song" action="addSong">
+	<spring:url value="/library/addSong/" var="addURL" />
+		<form:form method="POST" class="form-inline" modelAttribute="song" action="${addURL}">
 			<div class="form-group" style="margin-left: 5px;">
 				<form:label path="title">Title </form:label>
 				<form:input class="form-control" path="title" style="margin-left: 5px;"/>
@@ -49,6 +50,7 @@
 		</form:form>
 		</div>
 	<table class="table table-hover">
+	<spring:url value="/assets/images/dropdownSong.png" var="songDrop" />
 	<c:forEach items="${songs}" var="s">
 	 <spring:url value="${s.getMp3Path()}" var="url" />
 		<tr>
@@ -59,6 +61,38 @@
 				<audio controls>
 					 <source src="${url}" type="audio/mpeg">
 				</audio>
+				
+				<div align="center">
+					<button class="btn btn-orange dropdown-toggle editButton">
+					</button>
+					<div class="dropList" style="display: none;">
+						<form:form method="POST" class="form-inline" modelAttribute="editSong" action="updateSong">
+						<form:hidden name="id" value="${s.getId()}" path="id" />
+							<div class="form-group" style="margin-left: 5px;">
+								<form:label path="title">Title </form:label>
+								<form:input value="${s.getTitle()}" class="form-control" path="title" style="margin-left: 5px;"/>
+							</div>
+							<div class="form-group" style="margin-left: 5px;">
+			 					<form:label path="artist">Artist </form:label>
+								<form:input value="${s.getArtist()}" class="form-control" path="artist" style="margin-left: 5px;" />
+							</div> <br>
+							<div class="form-group" style="margin-left: 5px;">
+		 						<form:label path="album">Album </form:label>
+								<form:input value="${s.getAlbum()}" class="form-control" path="album" style="margin-left: 5px;" />
+							</div>
+							<div class="form-group" style="margin-left: 5px;">
+								<form:label path="year">Year </form:label>
+								<form:input value="${s.getYear()}" class="form-control" path="year" style="margin-left: 5px;" />
+							</div>
+							<form:errors path="*" />
+							<input type="submit" class="btn btn-orange" style="margin-bottom: 0; margin-left: 10px;" />
+						</form:form>
+						<spring:url value="/library/deleteSong/${s.getId()}/" var="deleteURL" />
+						<a href="${deleteURL}">Delete</a>
+					</div>
+				</div>
+				
+				
 			</td>
 		</tr>
 	</c:forEach>
