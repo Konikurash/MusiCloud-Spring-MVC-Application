@@ -127,8 +127,26 @@ public class UserDataService implements UserDataAccessInterface {
 
 	@Override
 	public UserModel findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM users WHERE email=?";
+		UserModel user = new UserModel();
+		
+		try
+		{
+			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, email);
+			if (srs.next())
+			{
+				user = new UserModel(srs.getInt("id"), srs.getString("firstName"), srs.getString("lastName"), srs.getString("email"), "");
+				return user;
+			}
+			else
+			{
+				user = new UserModel(-1, "", "", "", "");
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return user;
+		}
 	}
 	
 	/**

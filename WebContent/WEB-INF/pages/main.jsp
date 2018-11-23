@@ -27,8 +27,7 @@
 	<div class="lighter-module">
 	<div id="addSongToggle"><button class="btn btn-orange" id="">Add</button></div>
 	<div id="addSongModule" style="display: none;">
-	<spring:url value="/library/addSong/" var="addURL" />
-		<form:form method="POST" class="form-inline" modelAttribute="song" action="${addURL}">
+		<form:form method="POST" class="form-inline" modelAttribute="song" action="addSong">
 			<div class="form-group" style="margin-left: 5px;">
 				<form:label path="title">Title </form:label>
 				<form:input class="form-control" path="title" style="margin-left: 5px;"/>
@@ -88,7 +87,7 @@
 							<input type="submit" class="btn btn-orange" style="margin-bottom: 0; margin-left: 10px;" />
 						</form:form>
 						<spring:url value="/library/deleteSong/${s.getId()}/" var="deleteURL" />
-						<a href="${deleteURL}">Delete</a>
+						<a href="deleteSong/${s.getId()}">Delete</a>
 					</div>
 				</div>
 				

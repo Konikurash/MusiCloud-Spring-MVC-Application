@@ -10,7 +10,7 @@ public interface UsersBusinessInterface {
 	public boolean removeUser(int id);
 	public boolean updateUser(UserModel user);
 	public boolean updatePassword(ChangePasswordModel model);
+	public boolean checkIfUserExists(UserModel user);
 	public UserModel getUserById(int id);
 	public UserModel loginUserWithModel(UserModel model);
-
 }

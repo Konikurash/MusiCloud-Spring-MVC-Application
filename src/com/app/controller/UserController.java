@@ -88,7 +88,7 @@ public class UserController {
 		if(resultLogin.hasErrors())
 		{
 			mv.addObject("login", login);
-			mv.setViewName("redirect:/");
+			mv.setViewName("loginReg");
 			return mv;
 		}
 		
@@ -124,31 +124,46 @@ public class UserController {
 		//check if the form has errors
 		if(resultUser.hasErrors())
 		{
-			redir.addFlashAttribute("user", user);
-			redir.addFlashAttribute("login", new LoginCredentialsModel());
-			mv.setViewName("redirect:/login");
+			mv.addObject("user", user);
+			mv.addObject("login", new LoginCredentialsModel());
+			mv.setViewName("loginReg");
 			return mv;
 		}
 		
-		//Check if password field is equal to password confirmation field
-		if(user.getPassword().equals(user.getPasswordConfirmation()))
+		//check if the user already exists
+		if(userService.checkIfUserExists(user))
 		{
-			//if so, add user to the arraylist and direct to the login view
-			userService.addUser(user);
-			login.setEmail(user.getEmail());
+			System.out.println("User Already Exists");
+			resultUser.rejectValue("userExists", "error.user", "The Email of the account you are trying to create already exists, please use a different Email Address.");
+			user.setEmail("");
 			mv.addObject("user", user);
-			mv.addObject("login", login);
-			mv.setViewName("redirect:/");
+			mv.addObject("login", new LoginCredentialsModel());
+			mv.setViewName("loginReg");
 			return mv;
 		}
 		else
 		{
-			//if not, display error showing passwords do not match and refresh the register view
-			resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
-			mv.addObject("user", user);
-			mv.addObject("login", login);
-			mv.setViewName("redirect:/");
-			return mv;
+			
+			//Check if password field is equal to password confirmation field
+			if(user.getPassword().equals(user.getPasswordConfirmation()))
+			{
+				//if so, add user to the arraylist and direct to the login view
+				userService.addUser(user);
+				login.setEmail(user.getEmail());
+				mv.addObject("user", user);
+				mv.addObject("login", login);
+				mv.setViewName("redirect:/");
+				return mv;
+			}
+			else
+			{
+				//if not, display error showing passwords do not match and refresh the register view
+				resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
+				mv.addObject("user", user);
+				mv.addObject("login", login);
+				mv.setViewName("loginReg");
+				return mv;
+			}
 		}
 	}
 	

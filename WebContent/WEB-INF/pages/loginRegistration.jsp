@@ -33,6 +33,7 @@
 <div id="registration-form" style="display: none;">
 <form:form method="POST" modelAttribute="user" action="registerUser">
   <div class="form-group">
+  <form:errors path="userExists"/>
   	<div class="col-4">
 		<form:label path="firstName">First Name</form:label>
 		<form:input class="form-control" path="firstName" />
@@ -41,7 +42,7 @@
   </div>
   <div class="form-group">
   	<div class="col-4">
-  				<form:label path="lastName">Last Name</form:label>
+		<form:label path="lastName">Last Name</form:label>
 		<form:input class="form-control" path="lastName" />
   	</div>
   	<form:errors path="lastName"/>
@@ -67,7 +68,7 @@
 	</div>
 	<form:errors path="passwordConfirmation"/>
   </div>
-
+  
   <input type="submit" value="Submit" class="btn btn-orange" />
 	<p id="toLoginForm"><a href="javascript:void(0)">Return to login</a></p>
 </form:form>
