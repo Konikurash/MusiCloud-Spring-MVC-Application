@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 
 import com.app.model.UserModel;
@@ -100,7 +102,7 @@ public class UserController {
 		}
 		//if not, refresh the login view
 		mv.addObject("login", new LoginCredentialsModel());
-		mv.setViewName("loginReg");
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 	
@@ -115,11 +117,11 @@ public class UserController {
 	 * @return ModelAndView mv
 	 */
 	@RequestMapping(path="/registerUser", method=RequestMethod.POST)
-	public ModelAndView registerUser(@Valid @ModelAttribute("user")UserModel user, BindingResult resultUser, @Valid @ModelAttribute("login")LoginCredentialsModel login, BindingResult resultLogin)
+	public ModelAndView registerUser(@Valid @ModelAttribute("user")UserModel user, BindingResult resultUser, @Valid @ModelAttribute("login")LoginCredentialsModel login, BindingResult resultLogin, RedirectAttributes redir)
 	{
 		ModelAndView mv = new ModelAndView();
 		
-		//check if the form has erros
+		//check if the form has errors
 		if(resultUser.hasErrors())
 		{
 			mv.addObject("user", user);
@@ -128,25 +130,40 @@ public class UserController {
 			return mv;
 		}
 		
-		//Check if password field is equal to password confirmation field
-		if(user.getPassword().equals(user.getPasswordConfirmation()))
+		//check if the user already exists
+		if(userService.checkIfUserExists(user))
 		{
-			//if so, add user to the arraylist and direct to the login view
-			userService.addUser(user);
-			login.setEmail(user.getEmail());
+			System.out.println("User Already Exists");
+			resultUser.rejectValue("userExists", "error.user", "The Email of the account you are trying to create already exists, please use a different Email Address.");
+			user.setEmail("");
 			mv.addObject("user", user);
-			mv.addObject("login", login);
+			mv.addObject("login", new LoginCredentialsModel());
 			mv.setViewName("loginReg");
 			return mv;
 		}
 		else
 		{
-			//if not, display error showing passwords do not match and refresh the register view
-			resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
-			mv.addObject("user", user);
-			mv.addObject("login", login);
-			mv.setViewName("loginReg");
-			return mv;
+			
+			//Check if password field is equal to password confirmation field
+			if(user.getPassword().equals(user.getPasswordConfirmation()))
+			{
+				//if so, add user to the arraylist and direct to the login view
+				userService.addUser(user);
+				login.setEmail(user.getEmail());
+				mv.addObject("user", user);
+				mv.addObject("login", login);
+				mv.setViewName("redirect:/");
+				return mv;
+			}
+			else
+			{
+				//if not, display error showing passwords do not match and refresh the register view
+				resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
+				mv.addObject("user", user);
+				mv.addObject("login", login);
+				mv.setViewName("loginReg");
+				return mv;
+			}
 		}
 	}
 	

@@ -108,7 +108,7 @@ public class LibraryController {
 		songService.addSong(song);
 		mv.addObject("editSong", new SongModel());
 		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
-		mv.setViewName("main");
+		mv.setViewName("redirect: /MusiCloud/library/main");
 		
 		return mv;
 	}
@@ -138,7 +138,7 @@ public class LibraryController {
 		mv.addObject("songs" ,songService.getSongListByUserId(sessionUser.getId()));
 		mv.addObject("song", new SongModel());
 		mv.addObject("editSong", new SongModel());
-		mv.setViewName("main");
+		mv.setViewName("redirect: /MusiCloud/library/main");
 		
 		return mv;
 		
@@ -171,7 +171,7 @@ public class LibraryController {
 	
 		mv.addObject("song", new SongModel());
 		mv.addObject("editSong", editSong);
-		mv.setViewName("main");
+		mv.setViewName("redirect: /MusiCloud/library/main");
 		return mv;
 		
 	}

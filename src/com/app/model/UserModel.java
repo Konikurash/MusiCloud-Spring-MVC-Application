@@ -32,7 +32,8 @@ public class UserModel {
 	//create password confirmation string and set its size from 6-25 chars
 	@NotNull(message="You must confirm your passowrd")
 	@Size(min=6, max=25, message="Password Confirmation must be between 6 and 25 characters")
-	private String passwordConfirmation; //For registration only
+	private String passwordConfirmation; //For registration form
+	private boolean userExists; //for registration form
 	
 	/**
 	 * Default constructor method
@@ -198,4 +199,26 @@ public class UserModel {
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
 	}
+
+	/**
+	 * Getter method for userExists
+	 * 
+	 *
+	 * @return boolean
+	 */
+	public boolean getUserExists() {
+		return userExists;
+	}
+
+	/**
+	 * Setter method for userExists
+	 * 
+	 *
+	 * @param boolean userExists
+	 */
+	public void setUserExists(boolean userExists) {
+		this.userExists = userExists;
+	}
+	
+	
 }

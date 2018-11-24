@@ -99,4 +99,18 @@ public class UsersBusinessService implements UsersBusinessInterface {
 		this.service = service;
 	}
 
+	@Override
+	public boolean checkIfUserExists(UserModel user) {
+		user = service.findByEmail(user.getEmail());
+		
+		if(user.getId() == -1)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 }

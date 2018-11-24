@@ -88,7 +88,7 @@
 							<input type="submit" class="btn btn-orange" style="margin-bottom: 0; margin-left: 10px;" />
 						</form:form>
 						<spring:url value="/library/deleteSong/${s.getId()}/" var="deleteURL" />
-						<a href="${deleteURL}">Delete</a>
+						<a href="deleteSong/${s.getId()}">Delete</a>
 					</div>
 				</div>
 				
