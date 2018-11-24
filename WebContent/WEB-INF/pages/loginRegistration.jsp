@@ -7,8 +7,8 @@
 <div class="col-md-1">
 </div>
 <div class="col-md-5 login-module">
-<h1 id="module-head">Login</h1>
-<div id="login-form">
+<h1 id="module-head">${head}</h1>
+<div id="login-form" style="${logStyle}">
 <form:form method="POST" modelAttribute="login" action="loginUser">
   <div class="form-group">
   	<div class="col-4">
@@ -30,7 +30,7 @@
 </form:form>
 
 </div>
-<div id="registration-form" style="display: none;">
+<div id="registration-form" style="${regStyle}">
 <form:form method="POST" modelAttribute="user" action="registerUser">
   <div class="form-group">
   <form:errors path="userExists"/>

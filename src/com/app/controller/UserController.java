@@ -39,6 +39,9 @@ public class UserController {
 	//call UsersBusinessService
 	private UsersBusinessInterface userService;
 	
+	private String logStyle = "";
+	private String regStyle = "display: none;";
+	
 	@Autowired
 	private HttpSession httpSession;
 	
@@ -62,6 +65,7 @@ public class UserController {
 			return mv;
 		}
 		
+		displayLoginForm(mv);
 		mv.addObject("login", new LoginCredentialsModel());
 		mv.addObject("user", new UserModel());
 		mv.setViewName("loginReg");
@@ -87,6 +91,7 @@ public class UserController {
 		
 		if(resultLogin.hasErrors())
 		{
+			displayLoginForm(mv);
 			mv.addObject("login", login);
 			mv.setViewName("loginReg");
 			return mv;
@@ -101,7 +106,6 @@ public class UserController {
 			return mv;
 		}
 		//if not, refresh the login view
-		mv.addObject("login", new LoginCredentialsModel());
 		mv.setViewName("redirect:/");
 		return mv;
 	}
@@ -124,6 +128,7 @@ public class UserController {
 		//check if the form has errors
 		if(resultUser.hasErrors())
 		{
+			displayRegisterForm(mv);
 			mv.addObject("user", user);
 			mv.addObject("login", new LoginCredentialsModel());
 			mv.setViewName("loginReg");
@@ -136,6 +141,7 @@ public class UserController {
 			System.out.println("User Already Exists");
 			resultUser.rejectValue("userExists", "error.user", "The Email of the account you are trying to create already exists, please use a different Email Address.");
 			user.setEmail("");
+			displayRegisterForm(mv);
 			mv.addObject("user", user);
 			mv.addObject("login", new LoginCredentialsModel());
 			mv.setViewName("loginReg");
@@ -150,8 +156,6 @@ public class UserController {
 				//if so, add user to the arraylist and direct to the login view
 				userService.addUser(user);
 				login.setEmail(user.getEmail());
-				mv.addObject("user", user);
-				mv.addObject("login", login);
 				mv.setViewName("redirect:/");
 				return mv;
 			}
@@ -159,6 +163,7 @@ public class UserController {
 			{
 				//if not, display error showing passwords do not match and refresh the register view
 				resultUser.rejectValue("passwordConfirmation", "error.user", "Passwords do not match");
+				displayRegisterForm(mv);
 				mv.addObject("user", user);
 				mv.addObject("login", login);
 				mv.setViewName("loginReg");
@@ -321,6 +326,24 @@ public class UserController {
 	public void setUsersService(UsersBusinessInterface service)
 	{
 		this.userService = service;
+	}
+	
+	private void displayRegisterForm(ModelAndView mv)
+	{
+		logStyle = "display: none; height: 625px;";
+		regStyle = "";
+		mv.addObject("logStyle", logStyle);
+		mv.addObject("regStyle", regStyle);
+		mv.addObject("head", new String("Register"));
+	}
+	
+	private void displayLoginForm(ModelAndView mv)
+	{
+		logStyle = "";
+		regStyle = "display: none;";
+		mv.addObject("logStyle", logStyle);
+		mv.addObject("regStyle", regStyle);
+		mv.addObject("head", new String("Login"));
 	}
 	
 }
