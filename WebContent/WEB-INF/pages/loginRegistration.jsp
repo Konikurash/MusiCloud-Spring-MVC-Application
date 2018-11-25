@@ -6,19 +6,19 @@
 <div class="row login-module-container">
 <div class="col-md-1">
 </div>
-<div class="col-md-5 login-module">
+<div align="center" class="col-md-5 login-module">
 <h1 id="module-head">${head}</h1>
-<div id="login-form" style="${logStyle}">
+<div id="login-form" style="${logStyle}" class="login-form">
 <form:form method="POST" modelAttribute="login" action="loginUser">
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="email">Email Address</form:label>
 		<form:input class="form-control" type="email" path="email" />
 	 </div>
 	 <form:errors path="email"/>
   </div>
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field log-field">
 		<form:label path="password">Password</form:label>
 		<form:password class="form-control" path="password" />
 	</div>
@@ -30,39 +30,39 @@
 </form:form>
 
 </div>
-<div id="registration-form" style="${regStyle}">
+<div align="center" id="registration-form" style="${regStyle}" class="reg-form">
 <form:form method="POST" modelAttribute="user" action="registerUser">
   <div class="form-group">
   <form:errors path="userExists"/>
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="firstName">First Name</form:label>
 		<form:input class="form-control" path="firstName" />
 	 </div>
 	 <form:errors path="firstName"/>
   </div>
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="lastName">Last Name</form:label>
 		<form:input class="form-control" path="lastName" />
   	</div>
   	<form:errors path="lastName"/>
   </div>
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="email">Email Address</form:label>
 		<form:input class="form-control" type="email" path="email" />
 	 </div>
 	 <form:errors path="email"/>
   </div>
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="password">Password</form:label>
 		<form:password class="form-control" path="password" />
 	</div>
 	<form:errors path="password"/>
   </div>
   <div class="form-group">
-  	<div class="col-4">
+  	<div class="col-4 log-field">
 		<form:label path="passwordConfirmation">Confirm Password</form:label>
 		<form:password class="form-control" path="passwordConfirmation" />
 	</div>
@@ -76,7 +76,9 @@
 
 </div>
 
-<div class="col-md-4 login-module-right">
+<div class="col-md-1"> </div>
+
+<div align="center" class="col-md-2 login-module-right">
 <spring:url value="/assets/images/MusiCloud.png" var="MusiCloudLogo" />
 <img src="${MusiCloudLogo}" alt="MusiCloud Logo" class="center" width="200" height="200">
 <h1><i>MusiCloud</i></h1>

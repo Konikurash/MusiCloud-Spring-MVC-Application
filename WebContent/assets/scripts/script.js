@@ -2,13 +2,13 @@ $(document).ready(function(){
 	$("#toRegisterForm").click(function(e){
 		$("#login-form").toggle();
 		$("#registration-form").toggle();
-		$(".login-module-container").css("height", "625px");
+		$(".reg-form").css("height", "auto");
 		$("#module-head").text("Register");
 	});
 	$("#toLoginForm").click(function(e){
 		$("#login-form").toggle();
 		$("#registration-form").toggle();
-		$(".login-module-container").css("height", "375px");
+		$(".login-form").css("height", "auto");
 		$("#module-head").text("Login");
 	});
 	$("#addSongToggle").click(function(e){

@@ -38,10 +38,7 @@ public class UserController {
 	
 	//call UsersBusinessService
 	private UsersBusinessInterface userService;
-	
-	private String logStyle = "";
-	private String regStyle = "display: none;";
-	
+
 	@Autowired
 	private HttpSession httpSession;
 	
@@ -328,21 +325,27 @@ public class UserController {
 		this.userService = service;
 	}
 	
+	/**
+	 * Causes the registration form to initially display when loading login/registration view
+	 * 
+	 * @param ModelAndView mv
+	 */
 	private void displayRegisterForm(ModelAndView mv)
 	{
-		logStyle = "display: none; height: 625px;";
-		regStyle = "";
-		mv.addObject("logStyle", logStyle);
-		mv.addObject("regStyle", regStyle);
+		mv.addObject("logStyle", new String("display: none;"));
+		mv.addObject("regStyle", new String(""));
 		mv.addObject("head", new String("Register"));
 	}
 	
+	/**
+	 * Causes the login form to initially display when loading login/registration view
+	 * 
+	 * @param ModelAndView mv
+	 */
 	private void displayLoginForm(ModelAndView mv)
 	{
-		logStyle = "";
-		regStyle = "display: none;";
-		mv.addObject("logStyle", logStyle);
-		mv.addObject("regStyle", regStyle);
+		mv.addObject("logStyle", new String(""));
+		mv.addObject("regStyle", new String("display: none;"));
 		mv.addObject("head", new String("Login"));
 	}
 	
