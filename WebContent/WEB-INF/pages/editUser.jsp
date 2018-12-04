@@ -8,7 +8,7 @@
 <h1 align="center" style="font-size: 72px;">Settings</h1>
 </div>
 	<div class="col-lg-2"></div>
-	<div class="col-lg-4 lighter-module" align="center">
+	<div class="col-lg-4 settings-page lighter-module" align="center">
 		<h1>Edit Profile</h1>
 			<div class="" style="">
 				<form:form method="POST" modelAttribute="user" action="updateUser">
@@ -37,7 +37,7 @@
 				</form:form>
 		</div>
 	</div>
-	<div class="col-lg-4 lighter-module" align="center">
+	<div class="col-lg-4 settings-page lighter-module" align="center">
 		<h1>Change Password</h1>
 		<form:form method="POST" modelAttribute="passwordModel" action="updatePassword">
 		  <div class="form-group">

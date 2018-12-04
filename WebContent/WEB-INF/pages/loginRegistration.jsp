@@ -76,12 +76,12 @@
 
 </div>
 
-<div class="col-md-1"> </div>
+<div class="col-md-1"></div>
 
-<div align="center" class="col-md-2 login-module-right">
+<div align="center" class="col-md-2 order-first order-md-last login-module-right" style="margin-bottom: 30px">
 <spring:url value="/assets/images/MusiCloud.png" var="MusiCloudLogo" />
 <img src="${MusiCloudLogo}" alt="MusiCloud Logo" class="center" width="200" height="200">
-<h1><i>MusiCloud</i></h1>
+<h1 style="font-size: 40px"><i>MusiCloud</i></h1>
 </div>
 </div>
 

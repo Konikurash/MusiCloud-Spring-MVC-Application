@@ -28,25 +28,39 @@
 	<div id="addSongToggle"><button class="btn btn-orange" id="">Add</button></div>
 	<div id="addSongModule" style="display: none;">
 	<spring:url value="/library/addSong/" var="addURL" />
-		<form:form method="POST" class="form-inline" modelAttribute="song" action="${addURL}">
+		<form:form method="POST" modelAttribute="song" action="${addURL}">
+		<div class="col-md-12" align="center" style="margin-bottom: 5px;">
+		<div class="col-md-8" style="margin-bottom: 5px;">
 			<div class="form-group" style="margin-left: 5px;">
 				<form:label path="title">Title </form:label>
 				<form:input class="form-control" path="title" style="margin-left: 5px;"/>
 			</div>
+		</div>
+		<div class="col-md-8" style="margin-bottom: 5px;">
 			<div class="form-group" style="margin-left: 5px;">
 		 		<form:label path="artist">Artist </form:label>
 				<form:input class="form-control" path="artist" style="margin-left: 5px;" />
-			</div> <br>
+			</div>
+		</div>
+		<div class="col-md-8" style="margin-bottom: 5px;">
 			<div class="form-group" style="margin-left: 5px;">
 		 		<form:label path="album">Album </form:label>
 				<form:input class="form-control" path="album" style="margin-left: 5px;" />
 			</div>
+		</div>
+		<div class="col-md-8" style="margin-bottom: 5px;">
 			<div class="form-group" style="margin-left: 5px;">
 				<form:label path="year">Year </form:label>
 				<form:input class="form-control" path="year" style="margin-left: 5px;" />
 			</div>
-				<input type="submit" value="Submit" class="btn btn-orange" style="margin-bottom: 0; margin-left: 10px;" />
+		</div>
+		<div class="col-md-8" style="margin-bottom: 5px;">
+			<input type="submit" value="Submit" class="btn btn-orange" />
+		</div>
+		<div class="col-md-8" style="margin-bottom: 5px;">
 			<form:errors path="*" />
+		</div>
+		</div>
 		</form:form>
 		</div>
 	<table class="table table-hover">
@@ -54,11 +68,11 @@
 	<c:forEach items="${songs}" var="s">
 	 <spring:url value="${s.getMp3Path()}" var="url" />
 		<tr>
-			<td>
+			<td class="custom-row">
 				<h2>${s.getTitle()}</h2>
 				<p>${s.getAlbum()} </p>
 				<p>${s.getArtist()}</p>
-				<audio controls>
+				<audio controls style="margin-bottom: 15px">
 					 <source src="${url}" type="audio/mpeg">
 				</audio>
 				
@@ -66,33 +80,43 @@
 					<button class="btn btn-orange dropdown-toggle editButton">
 					</button>
 					<div class="dropList" style="display: none;">
-						<form:form method="POST" class="form-inline" modelAttribute="editSong" action="updateSong">
+						<form:form method="POST" modelAttribute="editSong" action="updateSong">
 						<form:hidden name="id" value="${s.getId()}" path="id" />
-							<div class="form-group" style="margin-left: 5px;">
+						<div class="col-md-12" align="center" style="margin-bottom: 5px;">
+						<div class="col-md-8" style="margin-bottom: 5px;">
+							<div class="form-group">
 								<form:label path="title">Title </form:label>
 								<form:input value="${s.getTitle()}" class="form-control" path="title" style="margin-left: 5px;"/>
 							</div>
-							<div class="form-group" style="margin-left: 5px;">
+						</div>
+						<div class="col-md-8" style="margin-bottom: 5px;">
+							<div class="form-group">
 			 					<form:label path="artist">Artist </form:label>
 								<form:input value="${s.getArtist()}" class="form-control" path="artist" style="margin-left: 5px;" />
-							</div> <br>
-							<div class="form-group" style="margin-left: 5px;">
+							</div>
+						</div>
+						<div class="col-md-8" style="margin-bottom: 5px;">
+							<div class="form-group">
 		 						<form:label path="album">Album </form:label>
 								<form:input value="${s.getAlbum()}" class="form-control" path="album" style="margin-left: 5px;" />
 							</div>
-							<div class="form-group" style="margin-left: 5px;">
+						</div>
+						<div class="col-md-8" style="margin-bottom: 5px;">
+							<div class="form-group">
 								<form:label path="year">Year </form:label>
 								<form:input value="${s.getYear()}" class="form-control" path="year" style="margin-left: 5px;" />
 							</div>
+						</div>
+						</div>
+						<div class="col-md-12" align="center">
+							<input type="submit" class="btn btn-orange"/><br />
 							<form:errors path="*" />
-							<input type="submit" class="btn btn-orange" style="margin-bottom: 0; margin-left: 10px;" />
+							<spring:url value="/library/deleteSong/${s.getId()}/" var="deleteURL" />
+							<a href="deleteSong/${s.getId()}">Delete</a>
+						</div>
 						</form:form>
-						<spring:url value="/library/deleteSong/${s.getId()}/" var="deleteURL" />
-						<a href="deleteSong/${s.getId()}">Delete</a>
 					</div>
 				</div>
-				
-				
 			</td>
 		</tr>
 	</c:forEach>

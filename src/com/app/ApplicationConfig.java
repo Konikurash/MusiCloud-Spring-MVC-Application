@@ -106,7 +106,7 @@ public class ApplicationConfig {
 		dataSource.setUrl("jdbc:mysql://www.brendanbrooks.net/cst341");
 		dataSource.setUsername("memeboi27");
 		dataSource.setPassword("WillIsGay"); 
-		dataSource.setInitialSize(2);
+		dataSource.setInitialSize(20);
 		return dataSource;
 	}
 }
