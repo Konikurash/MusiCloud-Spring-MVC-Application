@@ -8,11 +8,25 @@ hr {
 	background-color: #636363;
 }
 
+h1{
+     word-wrap: break-word;
+     -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+     -ms-hyphens: auto;
+     -o-hyphens: auto;
+     hyphens: auto;
+}
+
 .login-module-container {
 	margin-top: 200px;
 	margin-left: 30px;
 	margin-right: 30px;
 	margin-bottom: 55px;
+}
+
+.row {
+	margin-right: 0px;
+	margin-left: 0px;
 }
 
 .login-module {
