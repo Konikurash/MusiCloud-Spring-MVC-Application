@@ -54,14 +54,18 @@ public class UserController {
 	{
 		ModelAndView mv = new ModelAndView();
 		
+		//get use from the session
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
 		
+		//check if sessionUser exists. if so, redirect to main view
 		if(sessionUser != null)
 		{
 			mv.setViewName("redirect: library/main");
 			return mv;
 		}
 		
+		//direct to the login/registration view
+		//display the login form
 		displayLoginForm(mv);
 		mv.addObject("login", new LoginCredentialsModel());
 		mv.addObject("user", new UserModel());
@@ -86,14 +90,17 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("user", new UserModel());
 		
+		//check if there are any form errors
 		if(resultLogin.hasErrors())
 		{
+			//display the login form
 			displayLoginForm(mv);
 			mv.addObject("login", login);
 			mv.setViewName("loginReg");
 			return mv;
 		}
 		
+		//check if user exists in database.  If so, add user to the session and redirect to the main view
 		UserModel loggedIn = userService.loginUserWithModel(new UserModel("", "", login.getEmail(), login.getPassword()));
 		if(loggedIn.getId() != -1)
 		{
@@ -135,9 +142,10 @@ public class UserController {
 		//check if the user already exists
 		if(userService.checkIfUserExists(user))
 		{
-			System.out.println("User Already Exists");
+			//display error on registration form
 			resultUser.rejectValue("userExists", "error.user", "The Email of the account you are trying to create already exists, please use a different Email Address.");
 			user.setEmail("");
+			//display the reg form upon refresh
 			displayRegisterForm(mv);
 			mv.addObject("user", user);
 			mv.addObject("login", new LoginCredentialsModel());
@@ -177,9 +185,11 @@ public class UserController {
 	@RequestMapping(path="/settings", method=RequestMethod.GET)
 	public ModelAndView showEditPage()
 	{
+		//direct to the settings view
 		ModelAndView mv = new ModelAndView();
 		UserModel sessionUser = (UserModel) httpSession.getAttribute("user");
 		
+		//if the user doesn't exist in the session, redirect to the login/reg view
 		if(sessionUser == null)
 		{
 			return new ModelAndView("redirect: login");

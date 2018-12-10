@@ -12,6 +12,7 @@ import com.app.model.UserModel;
 
 /**
  * Data service for User.  Reads and writes to MySQL DB
+ * Using JdbcTemplate to create, read, update, and delete from MySQL DB
  *
  * @author William Bierer
  * @author Brendan Brooks
@@ -24,20 +25,27 @@ public class UserDataService implements UserDataAccessInterface {
 	private JdbcTemplate jdbcTemplateObject;
 
 	/**
-	 * Create user method
+	 * Create new user method
 	 * 
 	 * @param UserModel t
 	 * @return boolean value
 	 */
 	@Override
 	public boolean create(UserModel t) {
+		//create INSERT sql string
 		String sql = "INSERT INTO users(firstName, lastName, email, password) VALUES(?, ?, ?, ?)";
+		//use a try/catch block to catch exceptions
 		try
 		{
+			//use jdbcTemplateObject to insert new user into db
 			int rows = jdbcTemplateObject.update(sql, t.getFirstName(), t.getLastName(), t.getEmail(), t.getPassword());
 			
+			//return true if rows == 1
 			return rows == 1 ? true : false;
-		} catch (Exception e)
+			
+		}
+		//catch exceptions
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -46,20 +54,23 @@ public class UserDataService implements UserDataAccessInterface {
 	}
 
 	/**
-	 * Update user method
+	 * Update already existing user method
 	 * 
 	 * @param UserModel t
 	 * @return boolean value
 	 */
 	@Override
 	public boolean update(UserModel t) {
+		//create UPDATE sql string
 		String sql = "UPDATE users SET firstName=?, lastName=?, email=? WHERE id=?";
+		//use a try/catch block to catch exceptions
 		try
 		{
+			//use jdbcTemplateObject to update already existing user
 			jdbcTemplateObject.update(sql, t.getFirstName(), t.getLastName(), t.getEmail(), t.getId());
 			
 			return true;
-		} catch (Exception e)
+		}catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -68,20 +79,23 @@ public class UserDataService implements UserDataAccessInterface {
 	}
 
 	/**
-	 * Delete user method
+	 * Delete already existing user method
 	 * 
 	 * @param UserModel t
 	 * @return boolean value
 	 */
 	@Override
 	public boolean delete(int id) {
+		//create DELETE sql string
 		String sql = "DELETE FROM users WHERE id=?";
+		
+		//use a try/catch block to catch exceptions
 		try
 		{
 			int rows = jdbcTemplateObject.update(sql, id);
 			
 			return rows == 1 ? true : false;
-		} catch (Exception e)
+		}catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -97,11 +111,15 @@ public class UserDataService implements UserDataAccessInterface {
 	 */
 	@Override
 	public UserModel findByObject(UserModel t) {
+		//create sql SELECT statement
 		String sql = "SELECT * FROM users WHERE email=? AND password=?";
+		//create UserModel to represent the user
 		UserModel user = new UserModel();
 		
+		//use a try/catch block to catch exceptions
 		try
 		{
+			//use jdbcTemplateObject to query for user object
 			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, t.getEmail(), t.getPassword());
 			if (srs.next())
 			{
@@ -125,6 +143,12 @@ public class UserDataService implements UserDataAccessInterface {
 		return null;
 	}
 
+	/**
+	 * Selects user from MySQL db that corresponds with email
+	 * 
+	 * @param String email
+	 * @return UserModel user
+	 */
 	@Override
 	public UserModel findByEmail(String email) {
 		String sql = "SELECT * FROM users WHERE email=?";
@@ -150,19 +174,22 @@ public class UserDataService implements UserDataAccessInterface {
 	}
 	
 	/**
-	 * Update password method
+	 * Update password of already existing user method
 	 * 
 	 * @param ChangePasswordModel model
 	 * @return boolean value
 	 */
 	@Override
 	public boolean updatePassword(ChangePasswordModel model) {
-		// TODO Auto-generated method stub
+		//create UPDATE sql statement
 		String sql = "UPDATE users SET password=? WHERE id=?";
+		//use a try/catch block to catch exceptions
 		try
 		{
+			//use jdbcTemplateObject to update password of already existing user
 			int rows = jdbcTemplateObject.update(sql, model.getNewPassword(), model.getId());
 			
+			//if rows == 1 return ttue
 			return rows == 1 ? true : false;
 		} catch (Exception e)
 		{
