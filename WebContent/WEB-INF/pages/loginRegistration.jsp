@@ -80,8 +80,8 @@
 
 <div align="center" class="col-md-2 order-first order-md-last login-module-right" style="margin-bottom: 30px">
 <spring:url value="/assets/images/MusiCloud.png" var="MusiCloudLogo" />
-<img class="img-fluid" src="${MusiCloudLogo}" alt="MusiCloud Logo" class="center" width="200" height="200">
-<h1 style="font-size: 44px; word-wrap: break-word;"><i>MusiCloud</i></h1>
+<img src="${MusiCloudLogo}" alt="MusiCloud Logo" class="center" width="200" height="200">
+<h1 style="font-size: 44px"><i>MusiCloud</i></h1>
 </div>
 </div>
 

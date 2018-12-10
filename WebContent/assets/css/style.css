@@ -8,15 +8,6 @@ hr {
 	background-color: #636363;
 }
 
-h1{
-     word-wrap: break-word;
-     -webkit-hyphens: auto;
-     -moz-hyphens: auto;
-     -ms-hyphens: auto;
-     -o-hyphens: auto;
-     hyphens: auto;
-}
-
 .login-module-container {
 	margin-top: 200px;
 	margin-left: 30px;
