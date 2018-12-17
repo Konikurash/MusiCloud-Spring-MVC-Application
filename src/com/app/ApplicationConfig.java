@@ -103,10 +103,10 @@ public class ApplicationConfig {
 	{
 		DataSource dataSource = new DataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://www.brendanbrooks.net/cst341");
+		dataSource.setUrl("jdbc:mysql://cst341.ce3woughvo25.us-east-2.rds.amazonaws.com/cst341");
 		dataSource.setUsername("memeboi27");
-		dataSource.setPassword("WillIsGay"); 
-		dataSource.setInitialSize(20);
+		dataSource.setPassword("SheepMan27"); 
+		dataSource.setInitialSize(4);
 		return dataSource;
 	}
 }
