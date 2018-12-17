@@ -28,7 +28,7 @@ public class SongsBusinessService implements SongsBusinessInterface <SongModel> 
 	}
 
 	/**
-	 * add song method
+	 * add new song method
 	 * 
 	 * @param SongModel song
 	 * @return boolean value
@@ -41,11 +41,12 @@ public class SongsBusinessService implements SongsBusinessInterface <SongModel> 
 			return false;
 		}
 		
+		//use data service to create new song
 		return songDataService.create(song);
 	}
 
 	/**
-	 * remove song method
+	 * remove existing song method
 	 * 
 	 * @param int id
 	 * @param int userId
@@ -53,7 +54,7 @@ public class SongsBusinessService implements SongsBusinessInterface <SongModel> 
 	 */
 	@Override
 	public boolean removeSong(int id, int userId) {
-		
+		//use data service to delete song
 		return songDataService.delete(id, userId);
 	}
 
@@ -93,18 +94,19 @@ public class SongsBusinessService implements SongsBusinessInterface <SongModel> 
 	 */
 	@Override
 	public List<SongModel> getSongListByUserId(int id) {
-		// TODO Auto-generated method stub
+		//use data service to find list of songs by user id
 		return songDataService.findByUserId(id);
 	}
 	
 	/**
-	 * Update song method
+	 * Update existing song method
 	 * 
 	 * @param SongModel song
 	 * @return boolean value
 	 */
 	@Override
 	public boolean updateSong(SongModel song) {
+		//use data service to update song
 		return songDataService.update(song);
 	}
 

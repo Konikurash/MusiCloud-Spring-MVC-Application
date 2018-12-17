@@ -105,6 +105,7 @@ public class LibraryController {
 		//Using a song that already exists for now, until we learn how to handle files in Spring
 		song.setMp3Path("/assets/mp3/Ghost of Days Gone By.m4a");
 		song.setuserID(sessionUser.getId());
+		//use business service to add new song to the database
 		songService.addSong(song);
 		mv.addObject("editSong", new SongModel());
 		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
@@ -134,6 +135,7 @@ public class LibraryController {
 			return mv;
 		}
 		
+		//use business service to delete song from database
 		songService.removeSong(id, sessionUser.getId());
 		mv.addObject("songs" ,songService.getSongListByUserId(sessionUser.getId()));
 		mv.addObject("song", new SongModel());
@@ -164,11 +166,14 @@ public class LibraryController {
 			return mv;
 		}
 		
+		//get arrayList of songs from business service
 		mv.addObject("songs", songService.getSongListByUserId(sessionUser.getId()));
 		editSong.setuserID(sessionUser.getId());
 		editSong.setMp3Path("/assets/mp3/Ghost of Days Gone By.m4a");
+		//update using the business service
 		songService.updateSong(editSong);
 	
+		//redirect back to the main view upon successful update
 		mv.addObject("song", new SongModel());
 		mv.addObject("editSong", editSong);
 		mv.setViewName("redirect: /MusiCloud/library/main");
