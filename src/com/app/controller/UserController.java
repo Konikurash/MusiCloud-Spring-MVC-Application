@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 import com.app.model.UserModel;
-import com.app.business.UsersBusinessInterface;
+import com.app.business.interfaces.UsersBusinessInterface;
 import com.app.model.ChangePasswordModel;
 import com.app.model.LoginCredentialsModel;
 

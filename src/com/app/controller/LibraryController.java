@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.app.business.SongsBusinessInterface;
+import com.app.business.interfaces.SongsBusinessInterface;
 import com.app.model.SongModel;
 import com.app.model.UserModel;
 

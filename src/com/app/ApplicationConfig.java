@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
-import com.app.business.SongsBusinessInterface;
+import com.app.business.interfaces.SongsBusinessInterface;
 import com.app.business.SongsBusinessService;
-import com.app.business.UsersBusinessInterface;
+import com.app.business.interfaces.UsersBusinessInterface;
 import com.app.business.UsersBusinessService;
 import com.app.controller.UserController;
 import com.app.data.SongDataService;

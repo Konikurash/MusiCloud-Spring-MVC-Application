@@ -2,6 +2,7 @@ package com.app.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.app.business.interfaces.UsersBusinessInterface;
 import com.app.data.interfaces.UserDataAccessInterface;
 import com.app.model.ChangePasswordModel;
 import com.app.model.UserModel;
