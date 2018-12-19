@@ -107,6 +107,9 @@ public class ApplicationConfig {
 		dataSource.setUsername("memeboi27");
 		dataSource.setPassword("SheepMan27"); 
 		dataSource.setInitialSize(4);
+        dataSource.setTestOnBorrow(true);
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setValidationInterval(30000);
 		return dataSource;
 	}
 }
