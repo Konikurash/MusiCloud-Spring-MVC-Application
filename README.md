@@ -18,3 +18,6 @@ This project features an N-Layer architecture:
 
 ## User Accounts
 User accounts work by authenticating login credentials with the database, using the `LoginCredentialsModel`. A `UserModel` is then stored in the HTTP session so the application can know if the user is logged-in or not. If the user tries accessing any non-login page, they will be automatically redirected out.
+
+## UML Class Diagrams
+![alt text](https://cdn.discordapp.com/attachments/210313100342067201/525214683720974346/UMLClassDiagrams-Page-1.png)
