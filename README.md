@@ -1,6 +1,6 @@
 # MusiCloud Spring MVC Application
 This project was created by Brendan Brooks and William Bierer for their CST-341 (Open Source Computing) course at GCU. This project is to exemplify full-stack knowledge for building a Spring MVC application.
-The idea behind this project was to create a web application that would serve as a cloud storage for people to keep and stream all of their music. This is not intended to become a real product.
+The idea behind it was to create a web application that would serve as a cloud storage for people to keep and stream all of their music. This is not intended to become a real product.
 
 Our professor even [featured this on his YouTube channel](https://youtu.be/kEguj4cHQkM?t=586)
 
